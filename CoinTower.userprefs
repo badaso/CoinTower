@@ -1,0 +1,18 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\SoundCoinEffect.cs">
+    <Files>
+      <File FileName="Assets\Script\GameController.cs" Line="80" Column="2" />
+      <File FileName="Assets\Script\SoundManager.cs" Line="11" Column="2" />
+      <File FileName="Assets\Script\HUDController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\SoundButtonEffect.cs" Line="8" Column="29" />
+      <File FileName="Assets\Script\SoundCoinEffect.cs" Line="6" Column="28" />
+      <File FileName="Assets\Script\CoinController.cs" Line="54" Column="4" />
+      <File FileName="Assets\Script\CoinConstructor.cs" Line="91" Column="23" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
