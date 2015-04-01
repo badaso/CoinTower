@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameController : MonoBehaviour {
+using GooglePlayGames;
+using UnityEngine.SocialPlatforms;
 
+public class GameController : MonoBehaviour {
+	
 	public GameObject LobbyPopup;
 	public GameObject EndPopup;
 
-	public GameObject Lobby;
 	public GameObject playing;
 	public GameObject ready;
-	public GameObject gameOver;
 
 	public GameObject HitZone;
 	public int coinTypeGenerater;
@@ -31,18 +32,23 @@ public class GameController : MonoBehaviour {
 
 	private BoxCollider bCHitZone;
 
+	private bool bEndScoreSend = false;
+	private int bestScore;
+
 	private GameObject[] tmpParentCoin = new GameObject[]{};
 
 	private CameraController tmpCamera;
 	private CoinConstructor tmpCoinCounter;
 	private BGController tmpBGController;
 	private SoundManager tmpSoundManager;
+	private HUDController tmpHudController;
 
 	// Use this for initialization
 	void Start () {
 		state = GameState.LOBBY;
 
 		tmpCamera = GameObject.Find("Main Camera").GetComponent<CameraController>();
+		tmpHudController = GameObject.Find("HUD").GetComponent<HUDController>();
 
 		tmpCoinCounter = HitZone.GetComponent<CoinConstructor>();
 		bCHitZone = HitZone.GetComponent<BoxCollider>();
@@ -50,6 +56,13 @@ public class GameController : MonoBehaviour {
 		tmpBGController = this.GetComponent<BGController>();
 		tmpSoundManager = GetComponent<SoundManager>();
 
+		//구글 플레이 초기화
+		PlayGamesPlatform.Activate();
+		PlayGamesPlatform.DebugLogEnabled = true;
+
+		Social.localUser.Authenticate((bool success)=>{
+
+		});
 	}
 	
 	// Update is called once per frame
@@ -84,7 +97,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	void LobbyMenu(){
-		Lobby.SetActive(true);
 		bCHitZone.enabled = false;
 		LobbyPopup.SetActive(true);
 		if (tmpSoundManager.bgmNo == 0){
@@ -96,7 +108,6 @@ public class GameController : MonoBehaviour {
 	void ReadyGame(){
 		state = GameState.READY;
 
-		Lobby.SetActive(false);
 		bCHitZone.enabled = true;
 		LobbyPopup.SetActive(false);
 
@@ -124,8 +135,14 @@ public class GameController : MonoBehaviour {
 	}
 
 	void EndGame(){
+		if (bEndScoreSend == false){
+			tmpHudController.gameObject.SendMessage("LastScore", coinCounter);
+			bestScore = tmpHudController.GetComponent<HUDController>().nHighScore;
+			tmpHudController.gameObject.SendMessage("BestScoreSend", bestScore);
+			bEndScoreSend = true;
+		}
+
 		EndPopup.SetActive(true);
-		gameOver.SetActive(true);
 		playing.SetActive(false);
 
 		bCHitZone.enabled = false;
@@ -134,9 +151,12 @@ public class GameController : MonoBehaviour {
 			tmpSoundManager.BGMChange(3);
 			tmpSoundManager.bgmNo = 1;
 		}
+		ready.SetActive(false);
 	}
 
 	public void Retry(){
+		bEndScoreSend = false;
+
 		state = GameState.RETRY;
 
 		tmpCamera.gameObject.SendMessage("BaseCameraTransform");
@@ -146,7 +166,6 @@ public class GameController : MonoBehaviour {
 		tmpBGController.gameObject.SendMessage("ResetBGScroll");
 
 		EndPopup.SetActive(false);
-		gameOver.SetActive(false);
 		playing.SetActive(true);
 		bCHitZone.enabled = true;
 
@@ -190,5 +209,13 @@ public class GameController : MonoBehaviour {
 		if (SC == "GAMEEND"){
 			state = GameState.GAMEEND;
 		}
+	}
+
+	public void ShowLeaderboard(){
+		Social.ShowLeaderboardUI();
+	}
+
+	public void ShowAchievements(){
+		Social.ShowAchievementsUI();
 	}
 }

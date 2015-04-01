@@ -10,13 +10,14 @@ public class HUDController : MonoBehaviour {
 	public TextMesh UICoinType;
 	public TextMesh UIWindValue;
 	public GameObject UIHighScore;
+	public GameObject UIlastScore;
 
 	private int coinType;
 	private string coinTypeName;
 	private int coinCount;
 	private int windValue;
 	private string sWind;
-	private int nHighScore;
+	public int nHighScore;
 
 	// Use this for initialization
 	void Start () {
@@ -56,11 +57,12 @@ public class HUDController : MonoBehaviour {
 		{
 			nHighScore = nScore;
 			PlayerPrefs.SetInt("High Score", nHighScore);
-			UIHighScore.GetComponent<Text>().text = "high : " + nHighScore;
+			UIHighScore.GetComponent<Text>().text = "best : " + nHighScore;
 		}
 	}
 
 	void convertWind(){
+		//rand 값에 따라 바람 text 노출
 		if (windValue == -5){
 			sWind = "◀◀◀◀◀";}
 		if (windValue == -4){
@@ -83,5 +85,15 @@ public class HUDController : MonoBehaviour {
 			sWind = "▶▶▶▶";}
 		if (windValue == 5){
 			sWind = "▶▶▶▶▶";}
+	}
+
+	public void LastScore(int nScore){
+		UIlastScore.GetComponent<Text>().text = "score : " + nScore;
+	}
+
+	public void BestScoreSend(int nScore){
+		Social.ReportScore(nScore, "CgkIvY2w3dwREAIQBg",(bool success) =>{
+			//handle success or failure
+		});
 	}
 }
