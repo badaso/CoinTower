@@ -6,9 +6,9 @@ public class HUDController : MonoBehaviour {
 	public GameObject GameController;
 	public GameObject CoinIconViewer;
 
-	public TextMesh UICoinCounter;
-	public TextMesh UICoinType;
-	public TextMesh UIWindValue;
+	public GameObject UICoinCounter;
+	public GameObject UIWindValue;
+
 	public GameObject UIHighScore;
 	public GameObject UIlastScore;
 
@@ -33,21 +33,18 @@ public class HUDController : MonoBehaviour {
 			//바람 노출
 			windValue = GameController.GetComponent<GameController>().randWindValue;
 			convertWind();
-			UIWindValue.text = sWind;
+			UIWindValue.GetComponent<Text>().text = sWind;
 
 			//코인 카운트 노출
 			coinCount = GameController.GetComponent<GameController>().coinCounter;
-			UICoinCounter.text = coinCount.ToString("N0");
+			UICoinCounter.GetComponent<Text>().text = coinCount.ToString("N0");
 
 			//highScore check
 			checkUpdate (coinCount);
 
 			//다음 코인 노출
-			coinType = GameController.GetComponent<GameController>().coinTypeGenerater;
-			//coinTypeName = coinType.name.ToString();
-			//UICoinType.text = coinTypeName;
-
-			CoinIconViewer.GetComponent<UICoinIconViewer>().CoinIconChange(coinType);
+			//coinType = GameController.GetComponent<GameController>().coinTypeGenerater;
+			//CoinIconViewer.GetComponent<UICoinIconViewer>().CoinIconChange(coinType);
 		}
 	}
 

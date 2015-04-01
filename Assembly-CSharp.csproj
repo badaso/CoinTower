@@ -180,6 +180,7 @@
      <Compile Include="Assets\Script\SoundManager.cs" />
      <Compile Include="Assets\Script\UIButtonMessage.cs" />
      <Compile Include="Assets\Script\UICoinIconViewer.cs" />
+     <Compile Include="Assets\Script\UICoinViewer.cs" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\wallet_colors.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-km-rKH\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-iw\common_strings.xml" />

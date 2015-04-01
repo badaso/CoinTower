@@ -20,6 +20,9 @@ public class CoinConstructor : MonoBehaviour {
 	private bool randWindOn = true;
 	private bool coinConstructorWork = true;
 
+	public GameObject coinViewer;
+	private int prevRandCoinNo = 1;
+
 	void Update(){
 		if (randCoinNo == 1)
 			coin = coin_01;
@@ -50,6 +53,11 @@ public class CoinConstructor : MonoBehaviour {
 					Child.gameObject.SendMessage("StateCoercion", "MOVING");
 
 					randCoinNo = Random.Range(1,6);
+
+					coinViewer.gameObject.SendMessage("CoinViewerChange", randCoinNo);
+					coinViewer.gameObject.SendMessage("CoinViewerDelete", prevRandCoinNo);
+
+					prevRandCoinNo = randCoinNo;
 				}
 			}
 		}
@@ -97,5 +105,9 @@ public class CoinConstructor : MonoBehaviour {
 
 	public void ResetRandWind(){
 		randWind = 0;
+	}
+
+	public void ResetPrevRandCoinNo(){
+		prevRandCoinNo = 1;
 	}
 }

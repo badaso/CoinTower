@@ -30,6 +30,9 @@ public class GameController : MonoBehaviour {
 	}
 	public GameState state;
 
+	public GameObject coinViewer;
+	private bool bCoinViewerSend = false;
+
 	private BoxCollider bCHitZone;
 
 	private bool bEndScoreSend = false;
@@ -59,10 +62,11 @@ public class GameController : MonoBehaviour {
 		//구글 플레이 초기화
 		PlayGamesPlatform.Activate();
 		PlayGamesPlatform.DebugLogEnabled = true;
-
+		//구글 플레이 로그인
 		Social.localUser.Authenticate((bool success)=>{
 
 		});
+
 	}
 	
 	// Update is called once per frame
@@ -111,8 +115,6 @@ public class GameController : MonoBehaviour {
 		bCHitZone.enabled = true;
 		LobbyPopup.SetActive(false);
 
-		PlayingHudReset();
-
 		ready.SetActive(true);
 		baseCoin.SetActive(true);
 		playing.SetActive(true);
@@ -127,6 +129,8 @@ public class GameController : MonoBehaviour {
 			tmpSoundManager.BGMChange(2);
 			tmpSoundManager.bgmNo = 2;
 		}
+
+		PlayingHudReset();
 	}
 
 	void PlayingGame(){
@@ -141,6 +145,8 @@ public class GameController : MonoBehaviour {
 			tmpHudController.gameObject.SendMessage("BestScoreSend", bestScore);
 			bEndScoreSend = true;
 		}
+
+		bCoinViewerSend = false;
 
 		EndPopup.SetActive(true);
 		playing.SetActive(false);
@@ -164,6 +170,7 @@ public class GameController : MonoBehaviour {
 		tmpCoinCounter.gameObject.SendMessage("ResetCoinCounter");
 		tmpCoinCounter.gameObject.SendMessage("ResetRandWind");
 		tmpBGController.gameObject.SendMessage("ResetBGScroll");
+		tmpCoinCounter.gameObject.SendMessage("ResetPrevRandCoinNo");
 
 		EndPopup.SetActive(false);
 		playing.SetActive(true);
@@ -191,6 +198,11 @@ public class GameController : MonoBehaviour {
 		coinCounter = HitZone.GetComponent<CoinConstructor>().coinCount;
 		randWindValue = HitZone.GetComponent<CoinConstructor>().randWind;
 		coinTypeGenerater = HitZone.GetComponent<CoinConstructor>().randCoinNo;
+
+		if (bCoinViewerSend == false){
+			coinViewer.gameObject.SendMessage("CoinViewerChange", 1);
+			bCoinViewerSend = true;
+		}
 	}
 
 	public void StateCoercion(string SC){
