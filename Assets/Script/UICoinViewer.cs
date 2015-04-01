@@ -22,14 +22,15 @@ public class UICoinViewer : MonoBehaviour {
 			coin = coin_05;
 
 		GameObject Child = Instantiate(coin,this.transform.position,Quaternion.Euler(0,0,0)) as GameObject;
-		Rigidbody tmp = Child.GetComponent<Rigidbody>();
+		Rigidbody tmpRigidbody = Child.GetComponent<Rigidbody>();
+		Destroy(tmpRigidbody);
+		Component tmpCoinController = Child.GetComponent<CoinController>();
+		Destroy(tmpCoinController);
 		Child.transform.parent = this.transform;
-		Destroy(tmp);
 		Child.transform.localScale -= new Vector3(0.15f,0.15f,0.15f);
 	}
 
 	public void CoinViewerDelete(int i){
-		print("Coin_0" + i.ToString());
 		GameObject tmpParentCoin = transform.FindChild("Coin_0" + i.ToString() + "(Clone)").gameObject;
 		Destroy(tmpParentCoin);
 	}

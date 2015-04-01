@@ -41,6 +41,7 @@ public class CoinConstructor : MonoBehaviour {
 		RaycastHit hit;
 
 		if (coinConstructorWork == true){
+			print(coinConstructorWork);
 			if (Physics.Raycast(ray, out hit)){
 				if (hit.collider.gameObject.name == "HitZone"){
 					float mousePositionx = hit.point.x;
@@ -76,6 +77,7 @@ public class CoinConstructor : MonoBehaviour {
 	}
 
 	public void WorkOff(){
+		print("coinMove");
 		coinConstructorWork = false;
 	}
 

@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour {
 	private bool bEndScoreSend = false;
 	private int bestScore;
 
+	private bool bPlayingHudReset = false;
+
 	private GameObject[] tmpParentCoin = new GameObject[]{};
 
 	private CameraController tmpCamera;
@@ -130,11 +132,17 @@ public class GameController : MonoBehaviour {
 			tmpSoundManager.bgmNo = 2;
 		}
 
-		PlayingHudReset();
+		if (bPlayingHudReset == false){
+			PlayingHudReset();
+			bPlayingHudReset = true;
+		}
 	}
 
 	void PlayingGame(){
-		PlayingHudReset();
+		if (bPlayingHudReset == false){
+			PlayingHudReset();
+			bPlayingHudReset = true;
+		}
 		ready.SetActive(false);
 	}
 
@@ -147,6 +155,7 @@ public class GameController : MonoBehaviour {
 		}
 
 		bCoinViewerSend = false;
+		bPlayingHudReset = false;
 
 		EndPopup.SetActive(true);
 		playing.SetActive(false);
@@ -197,8 +206,8 @@ public class GameController : MonoBehaviour {
 	void PlayingHudReset(){
 		coinCounter = HitZone.GetComponent<CoinConstructor>().coinCount;
 		randWindValue = HitZone.GetComponent<CoinConstructor>().randWind;
-		coinTypeGenerater = HitZone.GetComponent<CoinConstructor>().randCoinNo;
 
+		HitZone.GetComponent<CoinConstructor>().randCoinNo = 1;
 		if (bCoinViewerSend == false){
 			coinViewer.gameObject.SendMessage("CoinViewerChange", 1);
 			bCoinViewerSend = true;
