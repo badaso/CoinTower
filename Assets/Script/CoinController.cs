@@ -30,7 +30,6 @@ public class CoinController : MonoBehaviour {
 			StateIdle();
 			break;
 		case CoinState.MOVING:
-			print ("Coin Moving!!!!!!!!!!!");
 			StateMoving();
 			break;
 			

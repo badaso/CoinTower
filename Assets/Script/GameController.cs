@@ -132,17 +132,13 @@ public class GameController : MonoBehaviour {
 			tmpSoundManager.bgmNo = 2;
 		}
 
-		if (bPlayingHudReset == false){
-			PlayingHudReset();
-			bPlayingHudReset = true;
-		}
+		PlayingHudReset();
+
 	}
 
 	void PlayingGame(){
-		if (bPlayingHudReset == false){
-			PlayingHudReset();
-			bPlayingHudReset = true;
-		}
+		PlayingHudReset();
+
 		ready.SetActive(false);
 	}
 
@@ -206,8 +202,10 @@ public class GameController : MonoBehaviour {
 	void PlayingHudReset(){
 		coinCounter = HitZone.GetComponent<CoinConstructor>().coinCount;
 		randWindValue = HitZone.GetComponent<CoinConstructor>().randWind;
-
-		HitZone.GetComponent<CoinConstructor>().randCoinNo = 1;
+		if (bPlayingHudReset == false){
+			HitZone.GetComponent<CoinConstructor>().randCoinNo = 1;
+			bPlayingHudReset = true;
+		}
 		if (bCoinViewerSend == false){
 			coinViewer.gameObject.SendMessage("CoinViewerChange", 1);
 			bCoinViewerSend = true;

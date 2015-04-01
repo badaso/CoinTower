@@ -27,7 +27,7 @@ public class UICoinViewer : MonoBehaviour {
 		Component tmpCoinController = Child.GetComponent<CoinController>();
 		Destroy(tmpCoinController);
 		Child.transform.parent = this.transform;
-		Child.transform.localScale -= new Vector3(0.15f,0.15f,0.15f);
+		Child.transform.localScale -= new Vector3(0.17f,0.17f,0.17f);
 	}
 
 	public void CoinViewerDelete(int i){
